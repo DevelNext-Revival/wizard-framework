@@ -47,6 +47,8 @@ task buildJs(dependsOn: ['gulp_compile']) {
 task buildWebLib(dependsOn: ['buildCss', 'buildJs']) {
 }
 
-
-
-processResources.dependsOn buildWebLib
+// buildWebLib needs Node.js 6.11.3 downloaded from nodejs.org, which now 403s (EOL release).
+// Not wiring it into processResources: resources/dnext-engine.{js,js.map,min.css} are
+// already checked into git as prebuilt output, so plain resource processing picks them
+// up as-is without needing the gulp/node toolchain at all. Run buildWebLib manually if
+// the JS/CSS sources under src-js/ ever need to be rebuilt.
